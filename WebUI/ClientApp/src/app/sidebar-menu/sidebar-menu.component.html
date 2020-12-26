@@ -1,0 +1,63 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+  <a href="#" routerLink="[/]" class="brand-link text-center">
+    <span class="font-weight-bold brand-text">RPTool</span>
+  </a>
+  <div class="sidebar">
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+        <li class="nav-item">
+          <a href="#" [routerLink]="['/']" class="nav-link" (click)="navActive='Dashboard'" [ngClass]="(navActive=='Dashboard')?'active':''">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Dashboard
+            </p>
+          </a>
+
+        </li>
+        <li class="nav-item">
+          <a href="#" [routerLink]="['/team-members']" (click)="navActive='Team Members'" [ngClass]="(navActive=='Team Members')?'active':''" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Team Members
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" [routerLink]="['/projects']" class="nav-link" (click)="navActive='Projects'" [ngClass]="(navActive=='Projects')?'active':''">
+            <i class="nav-icon fas fa-flag"></i>
+            <p>
+              Projects 
+            </p>
+          </a>
+          <!--<ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="#" [routerLink]="['/projects']"  class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>View all</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" [routerLink]="['/project-types']" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Manage Project Types</p>
+              </a>
+            </li>
+          </ul>-->
+        </li>
+        <li class="nav-item">
+          <a href="#" [routerLink]="['/reports']" (click)="navActive='Reports'" [ngClass]="(navActive=='Reports')?'active':''" class="nav-link">
+            <i class="nav-icon fas fa-chart-pie"></i>
+            <p>
+              Reports
+            </p>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>

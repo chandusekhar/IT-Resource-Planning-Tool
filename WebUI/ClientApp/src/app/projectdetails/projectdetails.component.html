@@ -1,0 +1,150 @@
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">{{project.projectName}}</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#" [routerLink]="['/']">Home</a></li>
+            <li class="breadcrumb-item"><a href="#" [routerLink]="['/projects']">Projects</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="content">
+    <div class="container-fluid">
+
+      <div class="row">
+
+        <section class="col-lg-12 connectedSortable">
+          <div class="card">
+            <div class="card-header border-bottom">
+              <h3 class="card-title" style="font-size:medium; font-weight:lighter">
+                <label style="font-weight:normal"><span [ngClass]="project.statusColorClass"></span> {{project.statusText}}</label>
+                <label class="ml-2" style="font-weight:normal"><span [ngClass]="project.priorityClass"></span> {{project.priorityText}} priority </label>
+              </h3>
+
+              <div class="card-tools">
+                <a data-toggle="modal" href="javascript:void(0);" class="text-primary" (click)="editProject(project)"><i class="fas fa-edit"></i> Edit</a>&nbsp;
+
+                <a data-toggle="modal" href="javascript:void(0);" class="text-danger" (click)="deleteProject(project.projectId)"><i class="fas fa-trash"></i> Remove</a>
+
+              </div>
+
+            </div>
+            <div class="card-body">
+
+              <div>
+                <h6 class="font-weight-bold lead">
+                  {{project.projectName}}
+                </h6>
+
+                <div *ngIf="project.status != 'Not-Started'">
+
+                  <p class="font-weight-bold text-muted">
+                    Account Manager: <span class="text-primary">{{project.accountManager}}</span> |
+                    Started On: <span class="text-primary">{{project.plannedStartDate | date: 'dd/MM/yyyy'}}</span> |
+                    Estimated Completion Date: <span class="text-primary">{{project.endDate | date: 'dd/MMM/yyyy'}}</span>
+                      
+                  </p>
+                  <p class="">{{project.description}}</p>
+                  <p class="alert border-warning" *ngIf="project.endDate!=null || project.endDate > project.plannedStartDate">
+                    <i class="fas fa-exclamation-triangle text-warning mr-2"></i> <span class="text-black" [ngClass]="project.DeadlineClass">Deadline: {{project.endDate | date: 'dd/MM/yyyy'}} | <span>{{project.projectCompletionDaysLeft}}</span></span>
+                  </p>
+                  <p><b>Project Timeline Report: </b></p>
+                  <!--<google-chart id="phaseschart" #phasesChart style="width:100% !important;"
+                                [dynamicResize]="true"
+                                [title]="phasesChartTitle"
+                                [type]="phaseChartType"
+                                [data]="phasesChartData"
+                                [options]="phasesChartOptions">-->
+                                  <!--[height]="phasesChartHeight"-->
+                  <!--</google-chart>-->
+
+                  <hr />
+                  <p *ngIf="project.membersInvolved.length>0">
+                    <b>Members Contributions:</b>                 
+                  </p>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!--<google-chart #chart
+                                    [title]="title"
+                                    [type]="type"
+                                    [data]="chartData"
+                                    [options]="options"
+                                    [width]="chartWidth"
+                                    [height]="chartHeight">
+                      </google-chart>-->
+                    </div>
+                    <div class="col-md-6">
+                      <div *ngFor="let member of project.membersInvolved">
+                        <p title="{{member.employeeName}}, {{member.employeeCode}}" class="mr-1" style="font-size:medium">
+                        <b>{{member.employeeName}}</b><br />
+                        from <span class="text-primary font-weight-bold">{{member.allocatedOnDate | date:'dd MMM yy'}}</span>
+                          to <span *ngIf="!member.isCurrentWorking" class="text-primary font-weight-bold">{{member.releasedOnDate | date: 'dd MMM yy'}}</span>
+                          <span *ngIf="member.isCurrentWorking" class="text-primary font-weight-bold">- currently working</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                 
+                  <div class="col-md-12">
+                    <p><small><i class="fas fa-info-circle text-info"></i> Graph value shows the report from start date to todays date for ongoing projects.</small></p>
+                  </div>
+                  <div *ngIf="project.projectDetails.length>0">
+                    <span class="font-weight-bold">
+                      Project History
+                    </span>
+                    <p></p>
+                    <div class="col-sm-12 mt-1 w-100 bg-light alert collapse show" id="_history_{{project.projectId}}">
+                      <div *ngFor="let ver of project.projectDetails;  let last = last; let i=index">
+                        <div class="row">
+                          <div class="col-md-1">
+                            <b class="text-muted">#{{i+1}}</b>
+                          </div>
+                          <div class="col-md-11">
+                            <p>
+                              <b style="font-size:large">{{ver.description}} </b>
+
+                              <span class="text-muted">
+                                | started from <span class="text-primary">{{ver.taskStartedOn | date: 'dd/MM/yyyy'}}</span>
+                                <span *ngIf="!ver.taskOngoing"> to <span class="text-primary">{{ver.taskCompletedOn | date: 'dd/MM/yyyy'}}</span></span>
+                                <span *ngIf="ver.taskOngoing"> - ongoing</span>
+                              </span>
+                              <span *ngIf="ver.taskOngoing" class="float-right"><span class="dot bg-warning"></span></span>
+                              <span *ngIf="!ver.taskOngoing" class="float-right"><span class="fas fa-check text-success"></span></span>
+                            </p> 
+                            <span *ngIf="!last">  
+                              <hr />
+                            </span>
+
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                </div>
+                <div *ngIf="project.status == 'Not-Started'">
+                  <p class="alert border-warning">
+                    <i class="fas fa-exclamation-triangle">Project has not been started!</i>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </section>
+</div>

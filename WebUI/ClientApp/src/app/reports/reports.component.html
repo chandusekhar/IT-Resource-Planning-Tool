@@ -1,0 +1,120 @@
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Reports</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#" [routerLink]="['/']">Home</a></li>
+            <li class="breadcrumb-item active">Project Reports</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <section class="col-lg-12 connectedSortable">
+          <div class="card">
+            <div class="card-header border-bottom pb-0 w-100">
+
+              <div class="form-group row w-100">
+                <div class="col-md-12">
+                  <div class="card-title">
+                    <h5>
+                      <b>Project Reports till date</b><br />
+                      <small class="text-muted">Use filters options to view the chart of individual projects</small>
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <div class="input-group input-group-sm mb-1">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Filter by Project</span>
+                        </div>
+                        <select class="form-control dropdown" [(ngModel)]="projectid" (change)="getProjectReport(projectid)">
+                          <option disabled selected value="0">Project...</option>
+                          <option *ngFor="let project of projects" value="{{project.projectId}}">
+                            {{project.projectName}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <div class="input-group input-group-sm mb-1">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="">Date Range</span>
+                        </div>
+                        <input type="date" [(ngModel)]="fromDate" class="form-control" aria-describedby="from-date">
+                        <input type="date" [(ngModel)]="toDate" class="form-control" aria-describedby="to-date">
+                        <div class="input-group-append">
+                          <button class="btn btn-primary btn-sm" (click)="getDateRangeChart()">Apply</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="col-md-6">
+                  <div class="input-group input-group-sm mb-1">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="_member">Member</span>
+                    </div>
+                    <select class="form-control dropdown" [(ngModel)]="memberid">
+                      <option disabled selected value="0">Choose Member</option>
+                      <option *ngFor="let member of membersInvolved" (click)="memberid=member.code" value="{{member.code}}">
+                        {{member.name}}
+                      </option>
+                    </select>
+                    <select class="form-control dropdown" [(ngModel)]="projectid">
+                      <option disabled selected value="0">Select Project ...</option>
+                      <option *ngFor="let project of projects" (click)="projectid=project.projectId;" value="{{project.projectId}}">
+                        {{project.projectName}}
+                      </option>
+                    </select>
+                    <button class="btn btn-sm btn-primary" style="border-top-left-radius:0px; border-bottom-left-radius:0px" (click)="getMembersReport()">Select</button>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <a title="Click to clear filters" class="btn btn-danger btn-sm float-right" (click)="clearFilters()"><i class="fas fa-times"></i> Remove Filters</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="alert border-info" [innerHtml]="reportTitle"></p>
+
+              <div *ngIf="showChart"> 
+
+                <apx-chart [series]="chartOptions.series"
+                           [chart]="chartOptions.chart"
+                           [fill]="chartOptions.fill"
+                           [legend]="chartOptions.legend"
+                           [plotOptions]="chartOptions.plotOptions"
+                           [xaxis]="chartOptions.xaxis"
+                           [colors]="chartOptions.colors"
+                           [tooltip]="chartOptions.tooltip"></apx-chart>
+ 
+              </div>
+             <div *ngIf="!showChart">
+               <p class="alert alert-warning"><i class="fas fa-exclamtion-triangle"></i> Not enough data to plot the graph. Please choose another filter.</p>
+             </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+</div>
+

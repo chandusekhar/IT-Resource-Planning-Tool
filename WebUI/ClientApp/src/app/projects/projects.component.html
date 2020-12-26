@@ -1,0 +1,87 @@
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Projects</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#" [routerLink]="['/']">Home</a></li>
+            <li class="breadcrumb-item active">Projects</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="content">
+    <div class="container-fluid">
+
+      <div class="row">
+
+        <section class="col-lg-12 connectedSortable">
+          <div class="card">
+            <div class="card-header border-bottom">
+              <h3 class="card-title">
+                Projects list ({{totalProjectsCount}})
+              </h3>
+
+              <div class="card-tools">
+                <a data-toggle="modal" href="javascript:void(0);" class="btn btn-sm btn-primary" (click)="addNewProject()"><i class="fas fa-plus"></i> New Project</a>
+
+              </div>
+              <br />
+              <p class="text-muted">Click on Project's Title to view their details.</p>
+            </div>
+            <div class="card-body">
+
+              <div *ngFor="let project of projects | paginate: { itemsPerPage: 5, currentPage: p }; let last = last">
+                <h6 title="Click here to view detailed information of {{project.projectName}}" class="font-weight-bold lead" [routerLink]="['/projects/', project.projectId]" style="cursor:pointer;">
+                  {{project.projectName}}
+                  <small class="float-right text-muted ml-1">{{project.statusText}}</small>
+                  <span class="float-right" title="{{project.statusText}}" [ngClass]="project.statusClass"></span>
+
+                  <small class="float-right text-muted mr-2"><span [ngClass]="project.priorityClass"></span> {{project.priorityText}} priority</small>
+                </h6>
+                <p>
+                  <span class="font-weight-bold text-muted">Account Manager: <b class="text-primary">{{project.accountManager}}</b></span> |
+                  <span class="font-weight-bold text-muted">Started On: <b class="text-primary">{{project.plannedStartDate | date: 'dd/MM/yyyy'}}</b></span>
+                  <br />
+                  <span class="font-weight-bold text-muted">Release Manager: <b class="text-primary">{{project.releaseManager.employeeName}}</b></span>
+                </p>
+                <p>
+                  {{project.description}}
+                  <span class="float-right">
+                    <a class="mr-2" href="#" (click)="editProject(project);"><i class="fas fa-edit text-primary"></i></a>
+                    <a class="" href="#" (click)="deleteProject(project.projectId);"><i class="fas fa-trash text-danger"></i></a>
+
+                  </span>
+                </p>
+
+                <div *ngIf="project.membersInvolved.length>0">
+
+                  <span *ngFor="let member of project.membersInvolved">
+                    <span class="badge badge-pill badge-secondary mr-1" data-toggle="tooltip" data-placement="top" title="{{member.employeeName}}, {{member.employeeCode}}"
+                          style="font-size:medium">{{member.initials}}</span>
+                  </span>
+                </div>
+                <div *ngIf="project.projectTeamMembers.length<=0">
+                  <p class="alert border-warning"><i class="fas fa-exclamation-triangle"></i> No members allocated. Default - <b>{{project.releaseManager.employeeName}}</b></p>
+                </div>
+
+
+                <div *ngIf="!last">
+                  <hr />
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <pagination-controls class="text-center" (pageChange)="p = $event"></pagination-controls>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </section>
+</div>

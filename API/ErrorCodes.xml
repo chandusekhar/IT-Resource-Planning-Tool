@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ExceptionCodes>
+  <Codes>
+    <Type>BAL</Type>
+    <Class>bLocation</Class>
+    <Method>GetLocation_Master</Method>
+    <Value>2001</Value>
+  </Codes>
+  <Codes>
+    <Type>API</Type>
+    <Class>LocationController</Class>
+    <Method>GetLocationList</Method>
+    <Value>1001</Value>
+  </Codes>
+
+<Codes>
+    <Type>BAL</Type>
+    <Class>bLocation</Class>
+    <Method>GetLocation</Method>
+    <Value>2002</Value>
+  </Codes>
+  <Codes>
+    <Type>API</Type>
+    <Class>LocationController</Class>
+    <Method>GetLocation</Method>
+    <Value>1002</Value>
+  </Codes>
+
+<Codes>
+    <Type>BAL</Type>
+    <Class>bLocation</Class>
+    <Method>GetOperationList</Method>
+    <Value>2003</Value>
+  </Codes>
+  <Codes>
+    <Type>API</Type>
+    <Class>LocationController</Class>
+    <Method>GetOperationList</Method>
+    <Value>1003</Value>
+  </Codes>
+</ExceptionCodes>
+<!--- TODO: Edit this file-->

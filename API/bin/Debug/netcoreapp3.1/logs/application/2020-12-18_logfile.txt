@@ -1,0 +1,16 @@
+2020-12-18 10:05:23.9121 DEBUG Error: Source#1001#Unable to connect to any of the specified MySQL hosts.>Unable to connect to any of the specified MySQL hosts.
+2020-12-18 10:05:23.9121 DEBUG Error: Source#1001#Unable to connect to any of the specified MySQL hosts.>Unable to connect to any of the specified MySQL hosts.
+2020-12-18 10:07:06.6304 DEBUG Error: Source#1001#Unable to connect to any of the specified MySQL hosts.>Unable to connect to any of the specified MySQL hosts.
+2020-12-18 10:07:06.6304 DEBUG Error: Source#1001#Unable to connect to any of the specified MySQL hosts.>Unable to connect to any of the specified MySQL hosts.
+2020-12-18 10:09:06.5553 DEBUG Error: Source#1001#Unable to connect to any of the specified MySQL hosts.>Unable to connect to any of the specified MySQL hosts.
+2020-12-18 10:09:06.5553 DEBUG Error: Source#1001#Unable to connect to any of the specified MySQL hosts.>Unable to connect to any of the specified MySQL hosts.
+2020-12-18 16:56:21.8885 DEBUG Error: Source#1001#Incorrect number of arguments for PROCEDURE itresourceplanningtool_db.getProjectTeamMembers; expected 0, got 1>Incorrect number of arguments for PROCEDURE itresourceplanningtool_db.getProjectTeamMembers; expected 0, got 1
+2020-12-18 16:59:59.7097 DEBUG Error: Source#1001#Incorrect number of arguments for PROCEDURE itresourceplanningtool_db.getProjectTeamMembers; expected 0, got 1>Incorrect number of arguments for PROCEDURE itresourceplanningtool_db.getProjectTeamMembers; expected 0, got 1
+2020-12-18 20:41:18.6862 DEBUG Error: Source#1001#Unknown column 'projectdetails.ProjectsId' in 'where clause'>Unknown column 'projectdetails.ProjectsId' in 'where clause'
+2020-12-18 20:44:10.4035 DEBUG Error: Source#1001#Unknown column 'projectdetails.ProjectsId' in 'where clause'>Unknown column 'projectdetails.ProjectsId' in 'where clause'
+2020-12-18 20:45:19.3540 DEBUG Error: Source#1001#Unknown column 'projectdetails.ProjectsId' in 'where clause'>Unknown column 'projectdetails.ProjectsId' in 'where clause'
+2020-12-18 20:47:13.5597 DEBUG Error: Source#1001#Unknown column 'projectdetails.ProjectsId' in 'where clause'>Unknown column 'projectdetails.ProjectsId' in 'where clause'
+2020-12-18 20:53:00.0940 DEBUG Error: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+2020-12-18 21:14:03.2705 DEBUG Error: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+2020-12-18 22:12:25.4042 DEBUG Error: Source#1001#Authentication to host 'localhost' for user 'root' using method 'mysql_native_password' failed with message: Reading from the stream has failed.>Authentication to host 'localhost' for user 'root' using method 'mysql_native_password' failed with message: Reading from the stream has failed.
+2020-12-18 22:12:25.4042 DEBUG Error: Source#1001#Authentication to host 'localhost' for user 'root' using method 'mysql_native_password' failed with message: Reading from the stream has failed.>Authentication to host 'localhost' for user 'root' using method 'mysql_native_password' failed with message: Reading from the stream has failed.

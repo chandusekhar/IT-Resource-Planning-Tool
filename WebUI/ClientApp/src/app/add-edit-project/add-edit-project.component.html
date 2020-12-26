@@ -1,0 +1,161 @@
+<div>
+  <div class="modal-content">
+    <div class="modal-body">
+      <h5 class="modal-title" id="newProjectModalLabel">
+        Add New Project
+        <button type="button" (click)="closeModal()" class="close" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </h5>
+      <small class="card-text"><span class="text-danger">*</span> marked fields are mandatory.</small>
+      <hr />
+      <form method="post" ngNativeValidate #projectInputForm class="form-group-horizontal">
+
+        <div class="form-group row">
+          <div class="col-md-12">
+            <span>Project Name <span class="text-danger">*</span></span>
+            <input type="text" [(ngModel)]="projectInputModel.projectName" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="e.g. IT Resource Planning Tool" required />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-md-3">
+            <span>Status <span class="text-danger">*</span></span>
+            <select class="form-control" ng-init="projectInputModel.status=0" [(ngModel)]="projectInputModel.status" required [ngModelOptions]="{standalone: true}">
+              <option disabled selected value="0">Select...</option>
+              <option value="1">In-Progress</option>
+              <option value="2">On-Hold</option>
+              <option value="3">Not Started</option>
+              <option value="4">Completed</option>
+              <option value="5">Cancelled</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <span>Priority <span class="text-danger">*</span></span>
+            <select class="form-control" ng-init="projectInputModel.priority=0" [(ngModel)]="projectInputModel.priority" required [ngModelOptions]="{standalone: true}">
+              <option disabled selected value="0">Select...</option>
+              <option value="1">Critical</option>
+              <option value="2">Low</option>
+              <option value="3">High</option>
+              <option value="4">Normal</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <span>Planned Start Date <span class="text-danger">*</span></span>
+            <input type="date" [(ngModel)]="projectInputModel.plannedStartDate" (blur)="setDefaultAllocatedStartDate(projectInputModel.plannedStartDate)" class="form-control" [ngModelOptions]="{standalone: true}" required />
+          </div>
+          <div class="col-md-3">
+            <span>Estimated End Date</span>
+            <input type="date" [(ngModel)]="projectInputModel.endDate" (blur)="setDefaultReleaseDate(projectInputModel.endDate)" [ngModelOptions]="{standalone: true}" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-4">
+            <span>Project Type <span class="text-danger">*</span></span>
+            <select [(ngModel)]="projectInputModel.projectTypeId" [ngModelOptions]="{standalone: true}" required class="form-control">
+              <option value="0" selected disabled>Select...</option>
+              <option *ngFor="let types of projectTypes" value="{{types.projectTypeId}}">{{types.type}}</option>
+
+            </select>
+          </div>
+
+          <div class="col-md-4">
+            <span>Release Manager <span class="text-danger">*</span></span>
+            <select [(ngModel)]="projectInputModel.releaseManagerId" [ngModelOptions]="{standalone: true}" required class="form-control">
+              <option value="0" selected disabled>Select...</option>
+              <option *ngFor="let member of teamMembers" value="{{member.teamMembersId}}">{{member.employeeName}}</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <span>Account Manager <span class="text-danger">*</span></span>
+            <input [(ngModel)]="projectInputModel.accountManager" [ngModelOptions]="{standalone: true}" required class="form-control" placeholder="Account Manager" />
+
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12">
+            <span>Description <span class="text-danger">*</span></span>
+            <textarea [(ngModel)]="projectInputModel.description" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Project Description ..." rows="4" required></textarea>
+          </div>
+
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12">
+            <span>Remarks</span>
+            <textarea [(ngModel)]="projectInputModel.remarks" [ngModelOptions]="{standalone: true}" class="form-control" rows="3" placeholder="Project Remarks ..."></textarea>
+
+          </div>
+
+        </div>
+
+
+        <div class="form-group alert bg-light">
+          <div class="col-md-12 mt-3">
+
+            <p class="font-weight-bold">
+              Allocate Team Members<br />
+              <small>(optional) You can also allocated members later.</small>
+            </p>
+            <hr />
+
+          </div>
+          <div class="col-md-12">
+
+            <div *ngFor="let member of teamMembers; let i =index; let last=last">
+              <div class="form-group row w-100">
+                <div class="col-md-5">
+                  <label class="checkbox">
+                    <input type="checkbox"
+                           [(ngModel)]="projectInputModel.projectTeamMembers[i].checked"
+                           [ngModelOptions]="{standalone: true}" class="checkbox-inline" /> {{member.employeeName}}
+                  </label>
+                </div>
+                <div class="col-md-7">
+
+                  <div class="input-group input-group-sm mb-1">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Date Range</span>
+                    </div>
+                    <input [disabled]="(projectInputModel.projectTeamMembers[i].teamMembersId != projectInputModel.releaseManagerId) && (!projectInputModel.projectTeamMembers[i].checked)"
+                           type="date" [(ngModel)]="projectInputModel.projectTeamMembers[i].allocatedOnDate" [ngModelOptions]="{standalone: true}" class="form-control">
+                    <input [disabled]="(projectInputModel.projectTeamMembers[i].teamMembersId != projectInputModel.releaseManagerId) && (!projectInputModel.projectTeamMembers[i].checked)" type="date"
+                           [(ngModel)]="projectInputModel.projectTeamMembers[i].releasedOnDate" [ngModelOptions]="{standalone: true}" class="form-control">
+
+                  </div>
+
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group pl-md-3 pl-sm-0 pl-lg-3 w-100">
+                  <div class="col-md-12">
+                    <span>Description</span>
+                    <input placeholder="Provide the work role for {{member.employeeName}}"
+                           [disabled]="(projectInputModel.projectTeamMembers[i].teamMembersId != projectInputModel.releaseManagerId) && (!projectInputModel.projectTeamMembers[i].checked)"
+                           type="text" [(ngModel)]="projectInputModel.projectTeamMembers[i].description" [ngModelOptions]="{standalone:true}" class="form-control" />
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div *ngIf="!last">
+                <hr />
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12">
+            <button type="submit" class="btn btn-primary mr-2" (click)="projectInputForm.checkValidity()? saveProjectData(projectInputModel): null">Save changes</button>
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>
+

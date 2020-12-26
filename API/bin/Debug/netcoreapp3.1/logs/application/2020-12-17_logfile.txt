@@ -1,0 +1,16 @@
+2020-12-17 10:08:17.8491 DEBUG Error: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+2020-12-17 10:11:12.1161 DEBUG Error: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+2020-12-17 10:45:54.2689 DEBUG Error: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+2020-12-17 10:56:12.1531 DEBUG Error: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+2020-12-17 11:26:45.7719 DEBUG Error: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+2020-12-17 11:27:23.4421 DEBUG Error: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+2020-12-17 11:28:24.8631 DEBUG Error: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+2020-12-17 11:41:38.0445 DEBUG Error: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+2020-12-17 11:43:36.9895 DEBUG Error: Source#1001#PROCEDURE itresourceplanningtool_db.getProjectTeamMembers does not exist>PROCEDURE itresourceplanningtool_db.getProjectTeamMembers does not exist
+2020-12-17 12:04:55.0306 DEBUG Error: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+2020-12-17 12:05:30.3065 DEBUG Error: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+2020-12-17 12:12:19.7783 DEBUG Error: The request matched multiple endpoints. Matches: 
+
+API.Controllers.TeamMembersController.GetProjects (API)
+API.Controllers.TeamMembersController.Get (API)
+2020-12-17 12:20:22.0816 DEBUG Error: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')

@@ -1,0 +1,267 @@
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Dashboard</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#" [routerLink]="['/']">Home</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-info">
+            <div class="inner">
+              <h3>{{totalProjectsCount}}</h3>
+              <p>Total Projects</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="#" [routerLink]="['/projects']" class="small-box-footer">View all <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h3>{{totalTeamMembersCount}}</h3>
+
+              <p>Total Team Members</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-person-add"></i>
+            </div>
+            <a href="#" [routerLink]="['/team-members']" class="small-box-footer">View all <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+
+        <section class="col-lg-8 connectedSortable">
+          <div class="card">
+            <div class="card-header border-bottom">
+              <h3 class="card-title">
+                <i class="fas fa-th-list mr-1"></i>
+                Projects
+              </h3>
+              <div class="card-tools">
+                <button class="btn btn-sm btn-primary" (click)="addNewProject()"><i class="fas fa-plus"></i> New Project</button>
+
+              </div>
+
+            </div>
+            <div class="card-body">
+
+              <div *ngFor="let project of projects|  slice:0:5; let last = last">
+                <h6 title="Click here to view detailed information of {{project.projectName}}" class="font-weight-bold lead" [routerLink]="['/projects/', project.projectId]" style="cursor:pointer;">
+                  {{project.projectName}}
+                  <small class="float-right text-muted ml-1">{{project.statusText}}</small>
+                  <span class="float-right" title="{{project.statusText}}" [ngClass]="project.statusClass"></span>
+
+                  <small class="float-right text-muted mr-2"><span [ngClass]="project.priorityClass"></span> {{project.priorityText}} priority</small>
+                </h6>
+                <p>
+                  <span class="font-weight-bold text-muted">Account Manager: <b class="text-primary">{{project.accountManager}}</b></span> |
+                  <span class="font-weight-bold text-muted">Started On: <b class="text-primary">{{project.plannedStartDate | date: 'dd/MM/yyyy'}}</b></span>
+                  <br />
+                  <span class="font-weight-bold text-muted">Release Manager: <b class="text-primary">{{project.releaseManager.employeeName}}</b></span>
+                </p>
+                <p>
+                  {{project.description}}
+                  <span class="float-right">
+                    <a class="mr-2" href="#" (click)="editProject(project)"><i class="fas fa-edit text-primary"></i></a>
+                    <a class="" href="#" (click)="deleteProject(project.projectId)"><i class="fas fa-trash text-danger"></i></a>
+
+                  </span>
+                </p>
+
+                <div *ngIf="project.membersInvolved.length>0">
+
+                  <span *ngFor="let member of project.membersInvolved">
+                    <span class="badge badge-pill badge-secondary mr-1" data-toggle="tooltip" data-placement="top" title="{{member.employeeName}}, {{member.employeeCode}}"
+                          style="font-size:medium">{{member.initials}}</span>
+                  </span>
+                </div>
+                <div *ngIf="project.projectTeamMembers.length<=0">
+                  <p class="alert border-warning"><i class="fas fa-exclamation-triangle"></i> No members allocated. Default - <b>{{project.releaseManager.employeeName}}</b></p>
+                </div>
+
+
+                <div *ngIf="!last">
+                  <hr />
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <a [routerLink]="['/projects']" class="text-link">View all</a>
+            </div>
+          </div>
+        </section>
+        <section class="col-lg-4 connectedSortable">
+          <div class="card">
+            <div class="card-header border-bottom">
+              <h3 class="card-title">
+                <i class="fas fa-users mr-1"></i> Team Members
+              </h3>
+              <div class="card-tools">
+                <button class="btn btn-sm btn-primary" (click)="addNewMember(teamMembersModal)"><i class="fas fa-plus"></i> New Member</button>
+
+              </div>
+            </div>
+            <div class="card-body">
+              <div *ngFor="let member of teamMembers; let last = last">
+                <p class="" style="cursor:pointer;">
+                  <b class="text-muted">{{member.employeeCode}}</b> - {{member.employeeName}}
+                  <small class="float-right text-muted ml-1">{{(member.isActive? 'Active':'Not Active')}}</small>
+                  <span class="float-right" title="{{(member.isActive? 'Active':'Not Active')}}" [ngClass]="member.isActive? 'dot bg-success':'dot bg-warning'"></span>
+                  <br />
+                  <span class="pt-2">
+                    <a class="mr-2" href="#" (click)="editMember(teamMembersModal, member, 'edit')"><i class="fas fa-edit text-primary"></i></a>
+                    <a class="" href="#" (click)="deleteMember(member.employeeCode)"><i class="fas fa-trash text-danger"></i></a>
+
+                  </span>
+
+                  <span *ngIf="!last">
+                    <hr />
+                  </span>
+                </p>
+
+
+              </div>
+            </div>
+            <div class="card-footer">
+              <a [routerLink]="['/team-members']" class="text-link">View all</a>
+            </div>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <div class="card">
+            <div class="card-header border-bottom">
+              <h3 class="card-title">
+                <i class="fas fa-th-list mr-1"></i> Project Types
+              </h3>
+              <div class="card-tools">
+                <button class="btn btn-sm btn-primary" (click)="addProjectTypes(projectTypeModal)"><i class="fas fa-plus"></i> New Project Type</button>
+
+              </div>
+            </div>
+            <div class="card-body">
+              <div *ngFor="let pt of projectTypes; let last = last; let i=index">
+                <p class="" style="cursor:pointer;">
+                  <b class="text-muted">{{i+1}}.</b> {{pt.type}}
+                  <a class="float-right" href="#" (click)="deleteProjectType(pt.projectTypeId)"><i class="fas fa-trash text-danger"></i></a>
+                  <a class="float-right mr-2" href="#" (click)="editProjectType(projectTypeModal, pt, 'edit')"><i class="fas fa-edit text-primary"></i></a>
+
+                  <span *ngIf="!last">
+                    <hr />
+                  </span>
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<ng-template #projectTypeModal>
+  <div class="modal-content">
+    <div class="modal-body">
+      <h5 class="modal-title" id="newProjectModalLabel">
+        Manage Project Types
+        <button type="button" (click)="closeModal()" class="close" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </h5>
+      <small class="card-text"><span class="text-danger">*</span> marked fields are mandatory.</small>
+      <hr />
+      <form method="post" ngNativeValidate #projectTypeInputForm class="form-group-horizontal">
+
+        <div class="form-group row">
+          <div class="col-md-12">
+            <span>Type <span class="text-danger">*</span></span>
+            <input type="text" [(ngModel)]="projectTypeInputModel.type" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="e.g. Government" required />
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12">
+            <hr />
+            <button type="submit" class="btn btn-primary mr-2" (click)="projectTypeInputForm.checkValidity()? saveProjectTypes(projectTypeInputModel): null">Save changes</button>
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</ng-template>
+
+<ng-template #teamMembersModal>
+  <div class="modal-content">
+    <div class="modal-body">
+      <h5 class="modal-title" id="newProjectModalLabel">
+        Manage Team Members
+        <button type="button" (click)="closeModal()" class="close" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </h5>
+      <small class="card-text"><span class="text-danger">*</span> marked fields are mandatory.</small>
+      <hr />
+      <form method="post" ngNativeValidate #teamMembersInputForm class="form-group-horizontal">
+        <div class="form-group row">
+          <div class="col-md-12">
+            <span>Name <span class="text-danger">*</span></span>
+            <input type="text" [(ngModel)]="teamMembersInputModel.employeeName" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="e.g. John Smith" required />
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-6">
+            <span>Employee Code <span class="text-danger">*</span></span>
+            <input type="text" [(ngModel)]="teamMembersInputModel.employeeCode" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="e.g. SBN001" required />
+          </div>
+          <div class="col-md-6">
+            <label class="checkbox" style="font-weight:normal">
+              <span>Is Active?</span><br />
+              <input type="checkbox" [(ngModel)]="teamMembersInputModel.isActive" [ngModelOptions]="{standalone: true}" class="checkbox-inline" />
+              Select this box if the member is active
+                     
+            </label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12">
+            <span>Designation <span class="text-danger">*</span></span>
+            <input type="text" [(ngModel)]="teamMembersInputModel.designation" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="e.g. Developer" required />
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12">
+            <hr />
+            <button type="submit" class="btn btn-primary mr-2" (click)="teamMembersInputForm.checkValidity()? saveTeamMembers(teamMembersInputModel): null">Save changes</button>
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</ng-template>
+
+
