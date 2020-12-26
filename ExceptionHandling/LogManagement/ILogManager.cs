@@ -1,6 +1,4 @@
-﻿
-
-namespace ExceptionHandling.LogManagement
+﻿namespace ExceptionHandling.LogManagement
 {
     public interface ILogManager
     {

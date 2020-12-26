@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Common.DbContext
+﻿namespace Common.DbContext
 {
     public class MyDbContext
     {
@@ -13,15 +9,6 @@ namespace Common.DbContext
             _MyConnection = new MySqlConnection();
             _MyCommand = new MySqlCommand(_MyConnection._MyConnection);
         }
-
-        //public MySqlCommand mdm
-        //{
-        //    get => _mdm;
-        //}
-        //public MySqlConnection msc
-        //{
-        //    get => _msc;
-        //}
 
         public void Close_MyDbContext()
         {

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.IO;
-using System.Xml.Linq;
 using System.Linq;
-using MySql.Data.MySqlClient;
+using System.Xml.Linq;
 
 namespace Common.Utilities
 {
@@ -18,9 +16,9 @@ namespace Common.Utilities
 
             if (CustomMsg != "")
                 // return "Source#" + values.ToList()[0].ToString() + ": " + CustomMsg + ">" + ex.Message; 
-                return   "Source#1001#" + CustomMsg + ">" + ex.Message;
+                return "Source#1001#" + CustomMsg + ">" + ex.Message;
             else
-                return "Source#" + values.ToList()[0].ToString() + "#: We are experiencing server error while processing your request. Inconvenience is regretted." + ">" + ex.Message; 
+                return "Source#" + values.ToList()[0].ToString() + "#: We are experiencing server error while processing your request. Inconvenience is regretted." + ">" + ex.Message;
         }
 
         internal static string MySqlExceptionMsg(MySqlException ex)
@@ -32,7 +30,7 @@ namespace Common.Utilities
         {
             //if (ex.Message.Contains("Source#1001("))
             //    return ex.Message;
-           if (ex.Message.Contains("Source#1001#"))
+            if (ex.Message.Contains("Source#1001#"))
                 return ex.Message;
             else if (ex.Message.Contains("Source#1002#"))
                 return ex.Message;
@@ -41,7 +39,7 @@ namespace Common.Utilities
             else
                 return GetErrorCode(ElementType, CodeClass, CodeMethod, CustomMsg, ex);
         }
-        //public static string MySqlExceptionMsg(MySql.Data.MySqlClient.MySqlException ex)
+        //public static string MySqlExceptionMsg(MySqlException ex)
         //{
         //    if (ex.Number == 0)
         //        return "Invalid User, Password or Database";

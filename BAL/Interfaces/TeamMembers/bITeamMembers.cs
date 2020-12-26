@@ -1,5 +1,4 @@
 ﻿using DTO.Models.TeamMembers;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -15,7 +14,7 @@ namespace BAL.Interfaces.TeamMembers
         /// <param name="inputModel"></param>   
         /// <param name="EmployeeCode"></param>
         /// <returns></returns>
-        Task EditAsync(TeamMembersModel inputModel, string EmployeeCode="");
+        Task EditAsync(TeamMembersModel inputModel, string EmployeeCode = "");
 
         /// <summary>
         /// Method to get all the records of Team Members
@@ -29,6 +28,11 @@ namespace BAL.Interfaces.TeamMembers
         /// <param name="EmployeeCode"></param>
         /// <returns></returns>
         Task<DataTable> GetAsync(string EmployeeCode);
+
+        /// <summary>
+        /// Returns the total Members count
+        /// </summary>
+        /// <returns></returns>
         Task<int> TeamMembersCountAsync();
 
         /// <summary>

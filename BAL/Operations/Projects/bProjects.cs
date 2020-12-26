@@ -1,17 +1,14 @@
-﻿using BAL.Interfaces.TeamMembers;
+﻿using BAL.Interfaces.Projects;
 using Common.DbContext;
+using DTO.Models.Projects;
+using DTO.Models.ProjectTypes;
 using DTO.Models.TeamMembers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using System.Threading.Tasks;
-using Common.Utilities;
-using DTO.Models.Projects;
-using BAL.Interfaces.Projects;
 using static Common.Utilities.DataTableVsListOfType;
-using Newtonsoft.Json;
-using DTO.Models.ProjectTypes;
 
 namespace BAL.Operations.Projects
 {
@@ -23,7 +20,7 @@ namespace BAL.Operations.Projects
             {
                 _MyCommand.Clear_CommandParameter();
                 _MyCommand.Add_Parameter_WithValue("par_ProjectId", ProjectId.ToString());
-                await Task.Run(()=>_MyCommand.Select_Table($"delete_Project", CommandType.StoredProcedure));
+                await Task.Run(() => _MyCommand.Select_Table($"delete_Project", CommandType.StoredProcedure));
             }
             catch (Exception ex)
             {
@@ -40,24 +37,22 @@ namespace BAL.Operations.Projects
         {
             try
             {
-                projectsModel.ProjectId = ProjectId?? Guid.NewGuid();
+                projectsModel.ProjectId = ProjectId ?? Guid.NewGuid();
                 projectsModel.AddedBy = "Admin"; // TODO: Replace with logged in user
-                projectsModel.AddedOn = projectsModel.AddedOn == null? DateTime.Now: projectsModel.AddedOn;
+                projectsModel.AddedOn = projectsModel.AddedOn == null ? DateTime.Now : projectsModel.AddedOn;
                 projectsModel.UpdatedOn = DateTime.Now;
                 // Insert Projects First // TODO: look a simpler way to insert projects and childs using single SP
-                
-                if(ProjectId != null)
+
+                if (ProjectId != null)
                 {
                     // remove old Project and Team Members and update with new ones ! Can be easily done by comparing 2 list if using linq
                     _MyCommand.Clear_CommandParameter();
                     _MyCommand.Add_Parameter_WithValue("par_ProjectId", ProjectId.Value.ToString());
                     _MyCommand.Select_Table($"delete_Project", CommandType.StoredProcedure);
-                    //                    _MyCommand.Add_Parameter_WithValue("projectId", ProjectId.Value.ToString());
-                    //await _MyCommand.AddOrEditWithStoredProcedure("update_Projects", null, projectsModel, "par_");
-                     
-                } 
-                    await _MyCommand.AddOrEditWithStoredProcedure("insert_Projects", null, projectsModel, "par_");
-                 
+
+                }
+                await _MyCommand.AddOrEditWithStoredProcedure("insert_Projects", null, projectsModel, "par_");
+
                 if (projectsModel.ProjectTeamMembers.Count > 0)
                 {
                     // Insert Team Memebers
@@ -83,7 +78,7 @@ namespace BAL.Operations.Projects
             {
                 _MyCommand.Clear_CommandParameter();
                 var _projects = await Task.Run(() => _MyCommand.Select_Table("select_Projects", CommandType.StoredProcedure));
-                
+
                 var modelData = await Task.Run(() => ConvertDataTableToList<ProjectsModel>(_projects));
                 foreach (var item in modelData)
                     GetModelDatas(item);
@@ -112,27 +107,27 @@ namespace BAL.Operations.Projects
             {
                 item.ReleaseManager = JsonConvert.DeserializeObject<TeamMembersModel>(item.ReleaseManagerJson);
                 item.ReleaseManagerJson = "";
-            } 
-           
+            }
+
             try
             {
                 // load the project history
                 var tblObj = _MyCommand.Select_Table($"select * from projectdetails where projectdetails.ProjectId='{item.ProjectId}';", CommandType.Text);
                 item.ProjectDetails = ConvertDataTableToList<ProjectDetailModel>(tblObj);
-                
+
                 // load the project Team Member
                 _MyCommand.Clear_CommandParameter();
                 _MyCommand.Add_Parameter_WithValue("par_ProjectId", item.ProjectId.ToString());
                 var _projectTeamMembers = _MyCommand.Select_Table($"getProjectTeamMembers", CommandType.StoredProcedure);
-                item.ProjectTeamMembers =  ConvertDataTableToList<ProjectTeamMembers>(_projectTeamMembers);
+                item.ProjectTeamMembers = ConvertDataTableToList<ProjectTeamMembers>(_projectTeamMembers);
                 item.ProjectTeamMembers.ForEach(pt => GetTeamMembers(pt));
-            
+
             }
             catch (Exception ex)
             {
                 throw new System.Exception(
                     Common.Utilities.ErrorCodes.ProcessException(ex, "BAL", "bProjects", "GetModelDatas(ProjectId)"));
-            } 
+            }
         }
 
         private void GetTeamMembers(ProjectTeamMembers pt)
@@ -168,8 +163,8 @@ namespace BAL.Operations.Projects
             try
             {
                 _MyCommand.Clear_CommandParameter();
-                var _dbObj= await Task.Run(() => _MyCommand.Select_Table("select count(*) from projectsmaster;", CommandType.Text));
-                if (_dbObj.Rows.Count<=0)
+                var _dbObj = await Task.Run(() => _MyCommand.Select_Table("select count(*) from projectsmaster;", CommandType.Text));
+                if (_dbObj.Rows.Count <= 0)
                 {
                     throw new Exception("Could not get count value");
                     //return 0;
@@ -193,7 +188,7 @@ namespace BAL.Operations.Projects
             {
                 _MyCommand.Clear_CommandParameter();
                 _MyCommand.Add_Parameter_WithValue("par_ProjectId", ProjectId.ToString());
-                var tblObj = await Task.Run(() => _MyCommand.Select_Table("getProjectHistory", CommandType.StoredProcedure));               
+                var tblObj = await Task.Run(() => _MyCommand.Select_Table("getProjectHistory", CommandType.StoredProcedure));
                 return tblObj;
             }
             catch (Exception ex)

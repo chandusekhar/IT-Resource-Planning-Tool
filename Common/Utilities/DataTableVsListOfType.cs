@@ -1,10 +1,8 @@
-﻿using System.Data;
+﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Data;
 using System.Linq;
-using System;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
+using System.Reflection;
 
 namespace Common.Utilities
 {
@@ -47,7 +45,7 @@ namespace Common.Utilities
                         tSource = new TTarget();
                         foreach (var field in dataTableFieldNames)
                         {
-                            
+
                             PropertyInfo propertyInfo = tSource.GetType().GetProperty(field.Name);
                             //Checking for Dbnull value and assigning property value to null added by Joseph gurung
                             object propertyvalue = row[field.Name];
@@ -62,7 +60,7 @@ namespace Common.Utilities
                         result.Add(tSource);
                     }
                 }
-                catch 
+                catch
                 {
 
                     //return  result;
@@ -111,7 +109,7 @@ namespace Common.Utilities
             return data;
         }
 
-        private static T GetRowItem<T>(DataRow dr) 
+        private static T GetRowItem<T>(DataRow dr)
         {
             Type temp = typeof(T);
             T obj = Activator.CreateInstance<T>();
@@ -125,12 +123,11 @@ namespace Common.Utilities
                         var _val = dr[column.ColumnName];
                         if (dr[column.ColumnName] == DBNull.Value)
                         {
-                            //_val = (_val == DBNull.Value)? (DateTime?) null : dr[column.ColumnName];
                             _val = null;
-                        } 
+                        }
                         pro.SetValue(obj, _val, null);
-                    }                   
-                       
+                    }
+
                     else
                         continue;
                 }

@@ -13,7 +13,6 @@ namespace Common.DbContext
 
             var root = configurationBuilder.Build();
             _connectionString = root.GetSection("ConnectionStrings").GetSection("DefaultConnection").Value;
-            //var appSetting = root.GetSection("ApplicationSettings");
         }
         public string ConnectionString
         {

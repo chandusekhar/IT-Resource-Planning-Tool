@@ -8,20 +8,14 @@ using Common.DbContext;
 using DTO.Models.TeamMembers;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Common.DataContext
 {
-    public static class Seed //: MyDbContext
+    public static class Seed
     {
-        ///<summary>
-        /// Adding Default Team Members
-        /// </summary>
-        /// 
-
         private static MyDbContext _dbContext = new MyDbContext();
-         
+
         public static async Task AddTeamMembers()
         {
             List<TeamMembersModel> teamMembers = new List<TeamMembersModel>();
@@ -37,7 +31,7 @@ namespace Common.DataContext
             teamMembers.Add(new TeamMembersModel
             {
                 AddedOn = DateTime.Now,
-                EmployeeCode = "SBN002", 
+                EmployeeCode = "SBN002",
                 EmployeeName = "Leela Bhallav Nepal",
                 UpdatedOn = DateTime.Now,
                 AddedBy = "Gautam Sharma",
@@ -87,9 +81,9 @@ namespace Common.DataContext
             teamMembers.Add(new TeamMembersModel
             {
                 AddedOn = DateTime.Now,
-                EmployeeCode = "SBN007", 
+                EmployeeCode = "SBN007",
                 EmployeeName = "Bheem Sharma",
-                UpdatedOn =  DateTime.Now,
+                UpdatedOn = DateTime.Now,
                 AddedBy = "Gautam Sharma",
                 Designation = "Developer"
             });
@@ -108,15 +102,6 @@ namespace Common.DataContext
                 _dbContext.Close_MyDbContext();
             }
         }
-
-
-        //private async Task AddProjects()
-        //{
-        //    var listProjects = new Projects
-        //    {
-
-        //    }
-        //}
 
     }
 }

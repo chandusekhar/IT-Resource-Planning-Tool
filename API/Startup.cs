@@ -9,7 +9,6 @@ using Microsoft.Extensions.Hosting;
 using NLog;
 using System;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace API
 {
@@ -22,7 +21,7 @@ namespace API
         }
 
         public IConfiguration Configuration { get; }
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins"; 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
@@ -33,12 +32,12 @@ namespace API
                     builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                 });
             });
-           
+
             services.DIBALResolver();
             services.ExceptionDIResolver();
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-;
+            ;
             services.AddRazorPages();
         }
 
@@ -53,7 +52,6 @@ namespace API
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -65,7 +63,7 @@ namespace API
             app.UseAuthentication();
             app.UseAuthorization();
             // First Run to seed default Datas to the database.
-            // Task.Run(() => Common.DataContext.Seed.AddTeamMembers()) ;
+            // Task.Run(() => Common.DataContext.Seed.AddTeamMembers());
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

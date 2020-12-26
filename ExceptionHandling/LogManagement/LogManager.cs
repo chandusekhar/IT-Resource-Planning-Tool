@@ -1,5 +1,4 @@
-﻿using System;
-using NLog;
+﻿using NLog;
 
 namespace ExceptionHandling.LogManagement
 {
@@ -7,7 +6,7 @@ namespace ExceptionHandling.LogManagement
     {
         private static ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-    
+
         public void LogInfo(string message)
         {
             _logger.Debug(message);
